@@ -1,11 +1,9 @@
 package zn.taco_cloud;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -35,7 +33,8 @@ public class DesignTacoController {
 
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
-        Iterable<Ingredient> ingredients = ingredientRepo.findAll();
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredientRepo.findAll().forEach(i -> ingredients.add(i));
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
             model.addAttribute(
@@ -79,9 +78,12 @@ public class DesignTacoController {
     }
 
     private Iterable<Ingredient> filterByType(
-        Iterable<Ingredient> ingredients,
+        List<Ingredient> ingredients,
         Type type
     ) {
-        return StreamSupport.stream(ingredients.spliterator(), false).filter(x->x.getType().equals(type)).collect(Collectors.toList());
+        return ingredients
+            .stream()
+            .filter(x -> x.getType().equals(type))
+            .collect(Collectors.toList());
     }
 }
