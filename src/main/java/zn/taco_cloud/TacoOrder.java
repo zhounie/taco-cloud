@@ -5,14 +5,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.rest.core.annotation.RestResource;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
 @Document
+@RestResource(rel = "tacoOrders", path = "tacoOrders")
 public class TacoOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;

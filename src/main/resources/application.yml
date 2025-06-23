@@ -1,3 +1,6 @@
 spring:
     application:
         name: taco-cloud
+    data:
+        rest:
+            base-path: /api
